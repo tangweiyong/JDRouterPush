@@ -385,7 +385,6 @@ def push_plus(title, content):
 # 企业微信推送
 def workwechat_push(text, desp):
     res = requests.post(f'https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid={COMPANYID}&corpsecret={SECRET}').json()
-    print(res)
     # 通行密钥
     ACCESS_TOKEN = res["access_token"]
     # 要发送的信息格式
@@ -393,13 +392,12 @@ def workwechat_push(text, desp):
         "touser": "@all",
         "msgtype": "text",
         "agentid": f"{AGENTID}",
-        "text": {"content": f"{text}"}
+        "text": {"content": f"{desp}"}
     }
     # 字典转成json，不然会报错
     data = json.dumps(data)
     # 发送消息
     res = requests.post(f'https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token={ACCESS_TOKEN}', data=data)
-    print(res)
     if res.status_code == 200:
         print("企业微信推送成功!")
     else:
@@ -417,7 +415,7 @@ def main():
     if RECORDSNUM.isdigit():
         records_num = int(RECORDSNUM)
     resolveDeviceName(DEVICENAME)
-    checkForUpdates()
+    #checkForUpdates()
     todayPointIncome()
     todayPointDetail()
     pinTotalAvailPoint()
