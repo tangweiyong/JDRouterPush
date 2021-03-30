@@ -31,5 +31,8 @@ jobs:
           TG_USER_ID: ${{ secrets.TG_USER_ID }}
           BARK: ${{ secrets.BARK }}
           PUSHPLUS: ${{ secrets.PUSHPLUS }}
+          AGENTID: ${{ secrets.AGENTID }}
+          COMPANYID: ${{ secrets.COMPANYID }}
+          SECRET: ${{ secrets.SECRET }}
       run: |
         python JDRouterPush.py
