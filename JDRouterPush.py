@@ -30,6 +30,10 @@ PUSHPLUS = os.environ.get("PUSHPLUS", "")  # PUSHPLUS消息推送Token
 DEVICENAME = os.environ.get("DEVICENAME", "")  # 设备名称 mac后6位:设置的名称，多个使用&连接
 RECORDSNUM = os.environ.get("RECORDSNUM", "7")  # 需要设置的获取记录条数 不填默认7条
 
+AgentId = os.environ.get("AgentId", "") # 应用ID
+Secret = os.environ.get("Secret", "") # 应用Secret
+CompanyId = os.environ.get("CompanyId", "") # 企业ID
+
 # 获取当天时间和当天积分
 def todayPointIncome():
     today_total_point = 0
@@ -296,8 +300,7 @@ def resultDisplay():
 ```
 {detail}
 ```""".format(**notifyContentJson)
-    server_push(title, markdownContent)
-    push_plus(title, markdownContent)
+    workwechat_push(title, markdownContent)
     print("标题->", title)
     print("内容->\n", markdownContent)
     normalContent = """{content}---
@@ -378,6 +381,26 @@ def push_plus(title, content):
     else:
         print("pushplus推送失败!")
 
+# 企业微信推送
+def workwechat_push(text, desp):
+    res = requests.post(f'https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid={CompanyId}&corpsecret={Secret}').json()
+    # 通行密钥
+    ACCESS_TOKEN = res["access_token"]
+    # 要发送的信息格式
+    data = {
+        "touser": "@all",
+        "msgtype": "text",
+        "agentid": f"{AgentId}",
+        "text": {"content": f"{text}"}
+    }
+    # 字典转成json，不然会报错
+    data = json.dumps(data)
+    # 发送消息
+    res = requests.post(f'https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token={ACCESS_TOKEN}', data=data)
+    if res.status_code == 200:
+        print("企业微信推送成功!")
+    else:
+        print("企业微信推送失败!")
 
 # endregion
 
