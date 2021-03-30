@@ -30,9 +30,9 @@ PUSHPLUS = os.environ.get("PUSHPLUS", "")  # PUSHPLUS消息推送Token
 DEVICENAME = os.environ.get("DEVICENAME", "")  # 设备名称 mac后6位:设置的名称，多个使用&连接
 RECORDSNUM = os.environ.get("RECORDSNUM", "7")  # 需要设置的获取记录条数 不填默认7条
 
-AgentId = os.environ.get("AgentId", "") # 应用ID
-Secret = os.environ.get("Secret", "") # 应用Secret
-CompanyId = os.environ.get("CompanyId", "") # 企业ID
+AGENTID = os.environ.get("AGENTID", "") # 应用ID
+SECRET = os.environ.get("SECRET", "") # 应用Secret
+COMPANYID = os.environ.get("COMPANYID", "") # 企业ID
 
 # 获取当天时间和当天积分
 def todayPointIncome():
@@ -383,7 +383,7 @@ def push_plus(title, content):
 
 # 企业微信推送
 def workwechat_push(text, desp):
-    res = requests.post(f'https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid={CompanyId}&corpsecret={Secret}').json()
+    res = requests.post(f'https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid={COMPANYID}&corpsecret={SECRET}').json()
     print(res)
     # 通行密钥
     ACCESS_TOKEN = res["access_token"]
@@ -391,13 +391,14 @@ def workwechat_push(text, desp):
     data = {
         "touser": "@all",
         "msgtype": "text",
-        "agentid": f"{AgentId}",
+        "agentid": f"{AGENTID}",
         "text": {"content": f"{text}"}
     }
     # 字典转成json，不然会报错
     data = json.dumps(data)
     # 发送消息
     res = requests.post(f'https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token={ACCESS_TOKEN}', data=data)
+    print(res)
     if res.status_code == 200:
         print("企业微信推送成功!")
     else:
