@@ -384,6 +384,7 @@ def push_plus(title, content):
 # 企业微信推送
 def workwechat_push(text, desp):
     res = requests.post(f'https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid={CompanyId}&corpsecret={Secret}').json()
+    print(res)
     # 通行密钥
     ACCESS_TOKEN = res["access_token"]
     # 要发送的信息格式
