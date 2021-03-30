@@ -390,7 +390,7 @@ def workwechat_push(text, desp):
     # 要发送的信息格式
     data = {
         "touser": "@all",
-        "msgtype": "markdown",
+        "msgtype": "text",
         "agentid": AGENTID,
         "text": {"content": text}
     }
