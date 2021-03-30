@@ -312,11 +312,11 @@ def resultDisplay():
 设备总数:{devicesCount}
 **设备信息如下:**
 
-{detail}""".format(**notifyContentJson)
-    print("标题->", title)
-    print("内容->\n", normalContent)
-    telegram_bot(title, normalContent)
-    bark(title, normalContent)
+#{detail}""".format(**notifyContentJson)
+    #print("标题->", title)
+    #print("内容->\n", normalContent)
+    #telegram_bot(title, normalContent)
+    #bark(title, normalContent)
 
 
 # Server酱推送
@@ -390,9 +390,9 @@ def workwechat_push(text, desp):
     # 要发送的信息格式
     data = {
         "touser": "@all",
-        "msgtype": "text",
-        "agentid": f"{AGENTID}",
-        "text": {"content": f"{desp}"}
+        "msgtype": "markdown",
+        "agentid": AGENTID,
+        "text": {"content": desp}
     }
     # 字典转成json，不然会报错
     data = json.dumps(data)
