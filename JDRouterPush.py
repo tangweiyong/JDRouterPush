@@ -392,7 +392,7 @@ def workwechat_push(text, desp):
         "touser": "@all",
         "msgtype": "markdown",
         "agentid": AGENTID,
-        "text": {"content": desp}
+        "text": {"content": text}
     }
     # 字典转成json，不然会报错
     data = json.dumps(data)
